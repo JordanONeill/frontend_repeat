@@ -1,0 +1,7 @@
+{
+  "name": "recipe-explorer",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
