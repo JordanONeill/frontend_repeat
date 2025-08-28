@@ -24,22 +24,23 @@ import {
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit, OnDestroy {
-  // search
+  // Search state bound to <ion-searchbar>
   searchTerm = '';
   recipes: any[] = [];
   loading = false;
 
-  // suggested
+  // Suggested random recipes (displayed as cards)
   suggested: any[] = [];
   suggestedLoading = false;
 
+  // Internal streams
   private search$ = new Subject<string>();
   private destroy$ = new Subject<void>();
 
   constructor(private recipeService: RecipeService) {}
 
   ngOnInit() {
-    // debounced live search
+    // Debounced live search pipeline
     this.search$
       .pipe(
         map((v) => (v ?? '').trim()),
@@ -52,6 +53,7 @@ export class HomePage implements OnInit, OnDestroy {
             this.loading = false;
             return EMPTY;
           }
+          // Call API for the current query
           return this.recipeService.searchRecipes(query).pipe(
             tap(() => (this.loading = false)),
             catchError((err) => {
@@ -68,7 +70,7 @@ export class HomePage implements OnInit, OnDestroy {
         this.recipes = data?.meals || [];
       });
 
-    // initial suggestions
+    // Load an initial set of suggestions
     this.loadSuggested(3);
   }
 
@@ -77,13 +79,14 @@ export class HomePage implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  /** Handle text input changes from the search bar */
   onInput(ev: CustomEvent) {
     const value = (ev as any)?.detail?.value ?? '';
     this.searchTerm = value;
     this.search$.next(value);
   }
 
-  // 🔹 Fetch N unique random recipes
+  /** Fetch N unique random recipes for the "Suggested" section */
   private async loadSuggested(n: number) {
     this.suggestedLoading = true;
     const picked = new Set<string>();
@@ -108,10 +111,9 @@ export class HomePage implements OnInit, OnDestroy {
     this.suggestedLoading = false;
   }
 
-  // 🔄 Public refresh handler for the button
+  /** Public refresh handler for the "Refresh" button */
   refreshSuggestions() {
-    // if already loading, ignore rapid taps
-    if (this.suggestedLoading) return;
+    if (this.suggestedLoading) return; // prevent rapid taps
     this.loadSuggested(3);
   }
 }

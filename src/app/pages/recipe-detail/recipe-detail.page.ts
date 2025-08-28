@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { IonicModule, ToastController } from '@ionic/angular'; // ⬅ ToastController here
+import { IonicModule, ToastController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { RecipeService } from '../../services/recipe.service';
 import { FavoritesService } from '../../services/favorites.service';
@@ -13,14 +13,16 @@ import { FavoritesService } from '../../services/favorites.service';
   styleUrls: ['./recipe-detail.page.scss']
 })
 export class RecipeDetailPage implements OnInit {
+  // The selected recipe, populated from API by id from the route
   recipe: any = null;
+  // Error message shown when data fails to load
   errorMsg = '';
 
   constructor(
     private route: ActivatedRoute,
     private recipeService: RecipeService,
     private favorites: FavoritesService,
-    private toastCtrl: ToastController               // ⬅ inject toast controller
+    private toastCtrl: ToastController // used to notify user actions
   ) {}
 
   ngOnInit() {
@@ -29,6 +31,7 @@ export class RecipeDetailPage implements OnInit {
       this.errorMsg = 'No recipe id in route.';
       return;
     }
+    // Load details for the given id
     this.recipeService.getRecipeById(id).subscribe({
       next: (data: any) => {
         this.recipe = data?.meals?.[0] || null;
@@ -41,6 +44,7 @@ export class RecipeDetailPage implements OnInit {
     });
   }
 
+  /** Build "Ingredient - Measure" list out of numbered fields */
   getIngredients(): string[] {
     if (!this.recipe) return [];
     const out: string[] = [];
@@ -52,7 +56,7 @@ export class RecipeDetailPage implements OnInit {
     return out;
   }
 
-  // Show a toast (small message at the bottom)
+  /** Helper: show a short toast */
   private async showToast(message: string, color: 'primary' | 'success' | 'warning' | 'danger' = 'primary') {
     const t = await this.toastCtrl.create({
       message,
@@ -63,10 +67,10 @@ export class RecipeDetailPage implements OnInit {
     await t.present();
   }
 
+  /** Add current recipe to favorites if not already present */
   async addToFavourites() {
     if (!this.recipe) return;
 
-    // check if already in favourites using the service snapshot
     const exists = this.favorites.snapshot.some(r => r.idMeal === this.recipe.idMeal);
     if (exists) {
       await this.showToast('Already in favourites', 'warning');

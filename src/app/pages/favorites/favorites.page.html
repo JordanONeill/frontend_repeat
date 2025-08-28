@@ -2,6 +2,7 @@
   <ion-toolbar color="primary">
     <ion-title>Favorites</ion-title>
 
+    <!-- Simple page links -->
     <ion-buttons slot="end">
       <ion-button routerLink="/home">Home</ion-button>
       <ion-button routerLink="/my-dishes">My Dishes</ion-button>
@@ -10,7 +11,9 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+  <!-- Subscribe via async pipe; fall back to "empty" template -->
   <ng-container *ngIf="favs.favorites$ | async as favorites; else empty">
+    <!-- Render list only when items exist -->
     <ion-list *ngIf="favorites.length; else empty">
       <ion-item *ngFor="let r of favorites" (click)="openRecipe(r.idMeal)">
         <ion-label>

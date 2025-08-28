@@ -5,15 +5,16 @@
     </ion-buttons>
     <ion-title>{{ recipe?.strMeal || 'Recipe Detail' }}</ion-title>
 
+    <!-- Quick link to favorites -->
     <ion-buttons slot="end">
       <ion-button routerLink="/favorites">Favorites</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
+<!-- Guard against null recipe with *ngIf and fallback template -->
 <ion-content class="ion-padding" *ngIf="recipe; else loadingOrError">
-
-  <!-- Constrained, centered image -->
+  <!-- Main hero image -->
   <img class="recipe-hero" [src]="recipe.strMealThumb" alt="{{ recipe.strMeal }}" />
 
   <h2 class="title">{{ recipe.strMeal }}</h2>
@@ -24,7 +25,7 @@
 
   <ion-button expand="block" color="secondary" (click)="addToFavourites()">Add to Favourites</ion-button>
 
-  <!-- INGREDIENTS FIRST -->
+  <!-- Ingredients list -->
   <ion-card>
     <ion-card-header>
       <ion-card-title>Ingredients</ion-card-title>
@@ -38,7 +39,7 @@
     </ion-card-content>
   </ion-card>
 
-  <!-- Then INSTRUCTIONS -->
+  <!-- Instructions section -->
   <ion-card>
     <ion-card-header>
       <ion-card-title>Instructions</ion-card-title>

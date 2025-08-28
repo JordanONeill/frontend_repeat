@@ -13,14 +13,16 @@ import { FavoritesService } from '../../services/favorites.service';
 })
 export class FavoritesPage {
   constructor(public favs: FavoritesService, private router: Router) {
-    // Ensure initial load is available
+    // Ensure data is loaded for the async pipe
     this.favs.refresh().catch(() => {});
   }
 
+  /** Navigate to the detail page for a selected favorite */
   openRecipe(id: string) {
     this.router.navigate(['/recipe', id]);
   }
 
+  /** Remove a favorite; stopPropagation prevents card click navigation */
   async removeFavorite(id: string, ev?: Event) {
     if (ev) ev.stopPropagation();
     await this.favs.remove(id);

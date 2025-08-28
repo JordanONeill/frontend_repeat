@@ -14,22 +14,25 @@ import { MyDishesService, MyDish } from '../../services/my-dishes.service';
   styleUrls: ['./my-dishes.page.scss'],
 })
 export class MyDishesPage {
+  // Bound to form inputs for new dish creation
   myDishes: MyDish[] = [];
   newDish: MyDish = { name: '', category: '', instructions: '' };
 
   constructor(private dishesSvc: MyDishesService) {
-    // subscribe so UI stays in sync
+    // Keep UI in sync with storage updates
     this.dishesSvc.dishes$.subscribe(list => (this.myDishes = list));
-    // ensure initial load
+    // Ensure initial data is available on first render
     this.dishesSvc.refresh().catch(() => {});
   }
 
+  /** Validate and persist the new dish */
   async addDish() {
     if (!this.newDish.name.trim()) return;
     await this.dishesSvc.add({ ...this.newDish });
     this.newDish = { name: '', category: '', instructions: '' };
   }
 
+  /** Remove dish by index */
   async removeDish(index: number) {
     await this.dishesSvc.removeAt(index);
   }

@@ -4,6 +4,10 @@ import { RecipeDetailPage } from './pages/recipe-detail/recipe-detail.page';
 import { FavoritesPage } from './pages/favorites/favorites.page';
 import { MyDishesPage } from './pages/my-dishes/my-dishes.page';
 
+/**
+ * Defines Angular application routes
+ */
+
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomePage },
