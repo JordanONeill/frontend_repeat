@@ -40,7 +40,39 @@
     </ion-row>
   </ion-grid>
 
-  <!-- Optional loading indicator -->
+  <!-- Suggested Recipes -->
+  <div class="suggested-section">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+      <h3 style="margin:0;">Suggested Recipes</h3>
+      <ion-button size="small" fill="outline" (click)="refreshSuggestions()" [disabled]="suggestedLoading">
+        {{ suggestedLoading ? 'Refreshing…' : 'Refresh' }}
+      </ion-button>
+    </div>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" size-sm="4" *ngFor="let s of suggested">
+          <ion-card class="suggested-card" [routerLink]="['/recipe', s.idMeal]">
+            <ion-img [src]="s.strMealThumb" alt="{{ s.strMeal }}"></ion-img>
+            <ion-card-content>
+              <strong>{{ s.strMeal }}</strong>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="suggestedLoading">
+        <ion-col size="12">
+          <ion-item lines="none">
+            <ion-label>Loading suggestions…</ion-label>
+            <ion-spinner slot="end"></ion-spinner>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <!-- Optional loading indicator for search -->
   <ion-item *ngIf="loading" lines="none">
     <ion-label>Searching…</ion-label>
     <ion-spinner slot="end"></ion-spinner>

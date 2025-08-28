@@ -9,18 +9,16 @@
   background: #fff;
 }
 
-/* Make the wrapper ion-item transparent */
+/* Search */
 .search-row {
   margin-top: 10px;
-  --background: transparent;       /* remove dark wrapper */
+  --background: transparent;
   background: transparent;
 }
-
-/* White search bar with green accents */
 ion-searchbar {
-  --background: #ffffff;           /* search box bg */
-  --color: #000000;                /* text color */
-  --placeholder-color: #666666;    /* placeholder */
+  --background: #ffffff;
+  --color: #000000;
+  --placeholder-color: #666666;
   --icon-color: var(--ion-color-primary);
   border: 2px solid var(--ion-color-primary);
   border-radius: 8px;
@@ -30,16 +28,40 @@ ion-searchbar {
   margin-top: 10px;
 }
 
-/* Light results list container */
-.results-list {
-  margin-top: 10px;
-  background: #fdfcf7;             /* off-white/khaki */
+/* Suggested section */
+.suggested-section {
+  margin-top: 14px;
+}
+.suggested-section h3 {
+  margin: 0 0 8px;
+  color: var(--ion-color-primary);
+}
+
+/* Suggested cards */
+.suggested-card {
+  cursor: pointer;
   border: 1px solid #e7e2cf;
   border-radius: 12px;
   overflow: hidden;
 }
+.suggested-card ion-img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+.suggested-card ion-card-content {
+  background: #fff;
+  color: #1a1a1a;
+}
 
-/* Each row light */
+/* Search results */
+.results-list {
+  margin-top: 10px;
+  background: #fdfcf7;
+  border: 1px solid #e7e2cf;
+  border-radius: 12px;
+  overflow: hidden;
+}
 .results-list ion-item {
   --background: #ffffff;
   --color: #1a1a1a;

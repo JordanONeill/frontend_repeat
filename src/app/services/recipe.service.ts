@@ -17,4 +17,8 @@ export class RecipeService {
   getRecipeById(id: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/lookup.php?i=${id}`);
   }
+
+  getRandomRecipe(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/random.php`);
+  }
 }

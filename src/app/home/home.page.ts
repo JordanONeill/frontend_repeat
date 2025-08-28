@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { RecipeService } from '../services/recipe.service';
 
-import { Subject, of, EMPTY } from 'rxjs';
+import { Subject, of, EMPTY, firstValueFrom } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
@@ -24,30 +24,30 @@ import {
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit, OnDestroy {
-  // bound to the searchbar (optional to show current text)
+  // search
   searchTerm = '';
-  // results shown under the searchbar
   recipes: any[] = [];
-  // simple loading flag for UX
   loading = false;
 
-  // internal subjects for reactive search + teardown
+  // suggested
+  suggested: any[] = [];
+  suggestedLoading = false;
+
   private search$ = new Subject<string>();
   private destroy$ = new Subject<void>();
 
   constructor(private recipeService: RecipeService) {}
 
   ngOnInit() {
-    // reactive pipeline for debounced search
+    // debounced live search
     this.search$
       .pipe(
         map((v) => (v ?? '').trim()),
-        debounceTime(250),                 // ← debounce here
+        debounceTime(250),
         distinctUntilChanged(),
         tap((q) => (this.loading = !!q)),
         switchMap((query) => {
           if (!query) {
-            // empty query clears results and stops loading
             this.recipes = [];
             this.loading = false;
             return EMPTY;
@@ -67,6 +67,9 @@ export class HomePage implements OnInit, OnDestroy {
       .subscribe((data: any) => {
         this.recipes = data?.meals || [];
       });
+
+    // initial suggestions
+    this.loadSuggested(3);
   }
 
   ngOnDestroy(): void {
@@ -74,11 +77,41 @@ export class HomePage implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  // fired by (ionInput); pushes text into the debounced stream
   onInput(ev: CustomEvent) {
-    // ionInput emits { detail: { value: string } }
     const value = (ev as any)?.detail?.value ?? '';
     this.searchTerm = value;
     this.search$.next(value);
+  }
+
+  // 🔹 Fetch N unique random recipes
+  private async loadSuggested(n: number) {
+    this.suggestedLoading = true;
+    const picked = new Set<string>();
+    const list: any[] = [];
+    let tries = 0;
+
+    while (list.length < n && tries < n * 4) {
+      tries++;
+      try {
+        const data = await firstValueFrom(this.recipeService.getRandomRecipe());
+        const meal = data?.meals?.[0];
+        if (meal && !picked.has(meal.idMeal)) {
+          picked.add(meal.idMeal);
+          list.push(meal);
+        }
+      } catch (e) {
+        console.error('Random fetch error', e);
+      }
+    }
+
+    this.suggested = list;
+    this.suggestedLoading = false;
+  }
+
+  // 🔄 Public refresh handler for the button
+  refreshSuggestions() {
+    // if already loading, ignore rapid taps
+    if (this.suggestedLoading) return;
+    this.loadSuggested(3);
   }
 }
