@@ -29,18 +29,18 @@ It allows you to search meals from TheMealDB API, view detailed recipes, save fa
 
 ## Project Structure
 
-src/
-├─ app/
-│ ├─ home/ # Home page (search + suggested recipes)
-│ ├─ pages/
-│ │ ├─ favorites/ # Favourites list
-│ │ ├─ my-dishes/ # User-added dishes
-│ │ └─ recipe-detail/ # Recipe detail view
-│ ├─ services/ # RecipeService + FavoritesService + MyDishesService
-│ ├─ app.routes.ts # App routes
-│ └─ app.component.ts # App shell
-├─ assets/ # Logo (recipe_finder.png) and static files
-├─ theme/ # variables.scss for theming
+src/  
+├─ app/  
+│ ├─ home/ # Home page (search + suggested recipes)  
+│ ├─ pages/  
+│ │ ├─ favorites/ # Favourites list  
+│ │ ├─ my-dishes/ # User-added dishes  
+│ │ └─ recipe-detail/ # Recipe detail view  
+│ ├─ services/ # RecipeService + FavoritesService + MyDishesService  
+│ ├─ app.routes.ts # App routes  
+│ └─ app.component.ts # App shell  
+├─ assets/ # Logo (recipe_finder.png) and static files  
+├─ theme/ # variables.scss for theming  
 
 ---
 
@@ -62,4 +62,3 @@ npm install
 
 # Run in browser
 ionic serve
-****
