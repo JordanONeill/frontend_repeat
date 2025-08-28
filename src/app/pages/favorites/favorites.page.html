@@ -1,26 +1,25 @@
 <ion-header>
-    <ion-toolbar color="primary">
-      <ion-title>Favorites</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  
-  <ion-content class="ion-padding">
-    <ion-list *ngIf="favorites.length > 0; else emptyState">
-      <ion-item *ngFor="let recipe of favorites; let i = index">
-        <ion-label>
-          <h2>{{ recipe.strMeal }}</h2>
-          <p>{{ recipe.strCategory }}</p>
-        </ion-label>
-        <ion-button fill="outline" color="danger" (click)="removeFavorite(i)">
-          Remove
-        </ion-button>
-      </ion-item>
-    </ion-list>
-  
-    <ng-template #emptyState>
-      <ion-text color="medium">
-        <p>You haven’t added any favorites yet.</p>
-      </ion-text>
-    </ng-template>
-  </ion-content>
-  
+  <ion-toolbar color="primary">
+    <ion-title>Favorites</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list *ngIf="favorites.length > 0; else emptyState">
+    <ion-item *ngFor="let recipe of favorites; let i = index">
+      <ion-label>
+        <h2>{{ recipe.strMeal }}</h2>
+        <p>{{ recipe.strCategory }}</p>
+      </ion-label>
+      <ion-button fill="outline" color="danger" (click)="removeFavorite(i)">
+        Remove
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ng-template #emptyState>
+    <ion-text color="medium">
+      <p>You haven’t added any favorites yet.</p>
+    </ion-text>
+  </ng-template>
+</ion-content>

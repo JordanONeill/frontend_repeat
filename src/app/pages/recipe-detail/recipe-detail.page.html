@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ recipe?.strMeal || 'Recipe Detail' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<!-- show recipe if loaded -->
+<ion-content class="ion-padding" *ngIf="recipe; else loadingOrError">
+  <ion-img [src]="recipe.strMealThumb" alt="{{ recipe.strMeal }}"></ion-img>
+
+  <h2>{{ recipe.strMeal }}</h2>
+  <p><strong>Category:</strong> {{ recipe.strCategory }}</p>
+  <p><strong>Area:</strong> {{ recipe.strArea }}</p>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Instructions</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{ recipe.strInstructions }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Ingredients</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let item of getIngredients()">
+          {{ item }}
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<!-- loading/error -->
+<ng-template #loadingOrError>
+  <ion-content class="ion-padding">
+    <ion-text *ngIf="!errorMsg" color="medium">
+      <p>Loading recipe...</p>
+    </ion-text>
+    <ion-text *ngIf="errorMsg" color="danger">
+      <p>{{ errorMsg }}</p>
+    </ion-text>
+  </ion-content>
+</ng-template>

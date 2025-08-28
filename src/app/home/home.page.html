@@ -6,13 +6,13 @@
 
 <ion-content class="ion-padding">
   <ion-item>
-    <ion-input [(ngModel)]="query" placeholder="Search recipes..."></ion-input>
-    <ion-button (click)="search()">Search</ion-button>
+    <ion-input [(ngModel)]="searchTerm" placeholder="Search recipes..."></ion-input>
+    <ion-button (click)="searchRecipes()">Search</ion-button>
   </ion-item>
 
   <ion-list>
-    <ion-item *ngFor="let r of results" (click)="openRecipe(r.idMeal)">
-      <ion-label>{{ r.strMeal }}</ion-label>
+    <ion-item *ngFor="let recipe of recipes" [routerLink]="['/recipe', recipe.idMeal]">
+      <ion-label>{{ recipe.strMeal }}</ion-label>
     </ion-item>
   </ion-list>
 </ion-content>

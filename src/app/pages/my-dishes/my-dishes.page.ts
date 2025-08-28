@@ -13,16 +13,16 @@ import { Storage } from '@ionic/storage-angular';
 })
 export class MyDishesPage {
   myDishes: any[] = [];
-  newDish = {
-    name: '',
-    category: '',
-    instructions: ''
-  };
+  newDish = { name: '', category: '', instructions: '' };
+  private storage: Storage;
 
-  constructor(private storage: Storage) {}
+  constructor() {
+    this.storage = new Storage({ name: '__mydb', driverOrder: ['indexeddb', 'localstorage'] });
+    this.init();
+  }
 
-  async ionViewWillEnter() {
-    // Load existing custom dishes from storage
+  async init() {
+    await this.storage.create();
     const stored = await this.storage.get('myDishes');
     this.myDishes = stored || [];
   }
@@ -30,11 +30,8 @@ export class MyDishesPage {
   async addDish() {
     if (!this.newDish.name.trim()) return;
 
-    // Save new dish to array + storage
     this.myDishes.push({ ...this.newDish });
     await this.storage.set('myDishes', this.myDishes);
-
-    // Clear form
     this.newDish = { name: '', category: '', instructions: '' };
   }
 

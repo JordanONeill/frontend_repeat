@@ -13,17 +13,20 @@ import { Storage } from '@ionic/storage-angular';
 })
 export class FavoritesPage {
   favorites: any[] = [];
+  private storage: Storage;
 
-  constructor(private storage: Storage) {}
+  constructor() {
+    this.storage = new Storage({ name: '__mydb', driverOrder: ['indexeddb', 'localstorage'] });
+    this.init();
+  }
 
-  async ionViewWillEnter() {
-    // Fetch saved favorites every time page opens
+  async init() {
+    await this.storage.create();
     const favs = await this.storage.get('favorites');
     this.favorites = favs || [];
   }
 
   async removeFavorite(index: number) {
-    // Remove a recipe from favorites
     this.favorites.splice(index, 1);
     await this.storage.set('favorites', this.favorites);
   }

@@ -1,44 +1,43 @@
 <ion-header>
-    <ion-toolbar color="primary">
-      <ion-title>My Dishes</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  
-  <ion-content class="ion-padding">
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Add a New Dish</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-item>
-          <ion-input [(ngModel)]="newDish.name" placeholder="Dish Name"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-input [(ngModel)]="newDish.category" placeholder="Category"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-textarea [(ngModel)]="newDish.instructions" placeholder="Instructions"></ion-textarea>
-        </ion-item>
-        <ion-button expand="block" color="success" (click)="addDish()">Save Dish</ion-button>
-      </ion-card-content>
-    </ion-card>
-  
-    <ion-list *ngIf="myDishes.length > 0; else noDishes">
-      <ion-item *ngFor="let dish of myDishes; let i = index">
-        <ion-label>
-          <h2>{{ dish.name }}</h2>
-          <p>{{ dish.category }}</p>
-        </ion-label>
-        <ion-button fill="outline" color="danger" (click)="removeDish(i)">
-          Delete
-        </ion-button>
+  <ion-toolbar color="primary">
+    <ion-title>My Dishes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Add a New Dish</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-input [(ngModel)]="newDish.name" placeholder="Dish Name"></ion-input>
       </ion-item>
-    </ion-list>
-  
-    <ng-template #noDishes>
-      <ion-text color="medium">
-        <p>No custom dishes saved yet.</p>
-      </ion-text>
-    </ng-template>
-  </ion-content>
-  
+      <ion-item>
+        <ion-input [(ngModel)]="newDish.category" placeholder="Category"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-textarea [(ngModel)]="newDish.instructions" placeholder="Instructions"></ion-textarea>
+      </ion-item>
+      <ion-button expand="block" color="success" (click)="addDish()">Save Dish</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list *ngIf="myDishes.length > 0; else noDishes">
+    <ion-item *ngFor="let dish of myDishes; let i = index">
+      <ion-label>
+        <h2>{{ dish.name }}</h2>
+        <p>{{ dish.category }}</p>
+      </ion-label>
+      <ion-button fill="outline" color="danger" (click)="removeDish(i)">
+        Delete
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ng-template #noDishes>
+    <ion-text color="medium">
+      <p>No custom dishes saved yet.</p>
+    </ion-text>
+  </ng-template>
+</ion-content>

@@ -1,29 +1,36 @@
 import { Component } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { RecipeService } from '../services/recipe.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [IonicModule, CommonModule, FormsModule, RouterModule],
   templateUrl: './home.page.html',
+  styleUrls: ['./home.page.scss'],
 })
 export class HomePage {
-  query = '';
-  results: any[] = [];
+  searchTerm: string = '';
+  recipes: any[] = [];
 
-  constructor(private recipeService: RecipeService, private router: Router) {}
+  constructor(private recipeService: RecipeService) {}
 
-  search() {
-    this.recipeService.searchRecipes(this.query).subscribe((data: any) => {
-      this.results = data.meals || [];
+  searchRecipes() {
+    if (!this.searchTerm.trim()) {
+      this.recipes = [];
+      return;
+    }
+    this.recipeService.searchRecipes(this.searchTerm).subscribe({
+      next: (data: any) => {
+        this.recipes = data?.meals || [];
+      },
+      error: (err) => {
+        console.error('Error fetching recipes:', err);
+        this.recipes = [];
+      }
     });
-  }
-
-  openRecipe(id: string) {
-    this.router.navigate(['/recipe', id]);
   }
 }
