@@ -1,6 +1,12 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar>
     <ion-title>My Dishes</ion-title>
+
+    <!-- quick nav -->
+    <ion-buttons slot="end">
+      <ion-button routerLink="/home">Home</ion-button>
+      <ion-button routerLink="/favorites">Favorites</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -23,19 +29,20 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-list *ngIf="myDishes.length > 0; else noDishes">
+  <ion-list *ngIf="myDishes.length; else none">
     <ion-item *ngFor="let dish of myDishes; let i = index">
       <ion-label>
         <h2>{{ dish.name }}</h2>
         <p>{{ dish.category }}</p>
+        <p class="truncate">{{ dish.instructions }}</p>
       </ion-label>
-      <ion-button fill="outline" color="danger" (click)="removeDish(i)">
+      <ion-button slot="end" color="danger" fill="outline" (click)="removeDish(i)">
         Delete
       </ion-button>
     </ion-item>
   </ion-list>
 
-  <ng-template #noDishes>
+  <ng-template #none>
     <ion-text color="medium">
       <p>No custom dishes saved yet.</p>
     </ion-text>

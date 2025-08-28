@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { Storage } from '@ionic/storage-angular';
+import { IonicModule } from '@ionic/angular';
+import { Router, RouterModule } from '@angular/router';
+import { FavoritesService } from '../../services/favorites.service';
 
 @Component({
   selector: 'app-favorites',
@@ -12,22 +12,17 @@ import { Storage } from '@ionic/storage-angular';
   styleUrls: ['./favorites.page.scss'],
 })
 export class FavoritesPage {
-  favorites: any[] = [];
-  private storage: Storage;
-
-  constructor() {
-    this.storage = new Storage({ name: '__mydb', driverOrder: ['indexeddb', 'localstorage'] });
-    this.init();
+  constructor(public favs: FavoritesService, private router: Router) {
+    // Ensure initial load is available
+    this.favs.refresh().catch(() => {});
   }
 
-  async init() {
-    await this.storage.create();
-    const favs = await this.storage.get('favorites');
-    this.favorites = favs || [];
+  openRecipe(id: string) {
+    this.router.navigate(['/recipe', id]);
   }
 
-  async removeFavorite(index: number) {
-    this.favorites.splice(index, 1);
-    await this.storage.set('favorites', this.favorites);
+  async removeFavorite(id: string, ev?: Event) {
+    if (ev) ev.stopPropagation();
+    await this.favs.remove(id);
   }
 }

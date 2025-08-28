@@ -1,18 +1,37 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Recipe Explorer</ion-title>
+
+    <!-- quick nav -->
+    <ion-buttons slot="end">
+      <ion-button routerLink="/favorites">Favorites</ion-button>
+      <ion-button routerLink="/my-dishes">My Dishes</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-item>
-    <ion-input [(ngModel)]="searchTerm" placeholder="Search recipes..."></ion-input>
-    <ion-button (click)="searchRecipes()">Search</ion-button>
+
+  <!-- Debounced live search -->
+  <ion-item lines="none">
+    <ion-searchbar
+      [value]="searchTerm"
+      (ionInput)="onInput($event)"
+      placeholder="Search recipes...">
+    </ion-searchbar>
   </ion-item>
 
+  <!-- Optional loading indicator -->
+  <ion-item *ngIf="loading" lines="none">
+    <ion-label>Searching…</ion-label>
+    <ion-spinner slot="end"></ion-spinner>
+  </ion-item>
+
+  <!-- Results list -->
   <ion-list>
     <ion-item *ngFor="let recipe of recipes" [routerLink]="['/recipe', recipe.idMeal]">
       <ion-label>{{ recipe.strMeal }}</ion-label>
     </ion-item>
   </ion-list>
+
 </ion-content>

@@ -4,16 +4,24 @@
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
     <ion-title>{{ recipe?.strMeal || 'Recipe Detail' }}</ion-title>
+
+    <!-- quick nav if you want -->
+    <ion-buttons slot="end">
+      <ion-button routerLink="/favorites">Favorites</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<!-- show recipe if loaded -->
 <ion-content class="ion-padding" *ngIf="recipe; else loadingOrError">
+
   <ion-img [src]="recipe.strMealThumb" alt="{{ recipe.strMeal }}"></ion-img>
 
   <h2>{{ recipe.strMeal }}</h2>
   <p><strong>Category:</strong> {{ recipe.strCategory }}</p>
   <p><strong>Area:</strong> {{ recipe.strArea }}</p>
+
+  <!--Add to Favourites button -->
+  <ion-button expand="block" (click)="addToFavourites()">Add to Favourites</ion-button>
 
   <ion-card>
     <ion-card-header>
@@ -38,7 +46,6 @@
   </ion-card>
 </ion-content>
 
-<!-- loading/error -->
 <ng-template #loadingOrError>
   <ion-content class="ion-padding">
     <ion-text *ngIf="!errorMsg" color="medium">

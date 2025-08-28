@@ -1,25 +1,38 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar>
     <ion-title>Favorites</ion-title>
+
+    <!-- quick nav -->
+    <ion-buttons slot="end">
+      <ion-button routerLink="/home">Home</ion-button>
+      <ion-button routerLink="/my-dishes">My Dishes</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-list *ngIf="favorites.length > 0; else emptyState">
-    <ion-item *ngFor="let recipe of favorites; let i = index">
-      <ion-label>
-        <h2>{{ recipe.strMeal }}</h2>
-        <p>{{ recipe.strCategory }}</p>
-      </ion-label>
-      <ion-button fill="outline" color="danger" (click)="removeFavorite(i)">
-        Remove
-      </ion-button>
-    </ion-item>
-  </ion-list>
+  <!-- Subscribe to the stream -->
+  <ng-container *ngIf="favs.favorites$ | async as favorites; else empty">
+    <ion-list *ngIf="favorites.length; else empty">
+      <ion-item *ngFor="let r of favorites" (click)="openRecipe(r.idMeal)">
+        <ion-label>
+          <h2>{{ r.strMeal }}</h2>
+          <p>{{ r.strCategory }} • {{ r.strArea }}</p>
+        </ion-label>
+        <ion-button
+          slot="end"
+          color="danger"
+          fill="outline"
+          (click)="removeFavorite(r.idMeal, $event)">
+          Remove
+        </ion-button>
+      </ion-item>
+    </ion-list>
+  </ng-container>
 
-  <ng-template #emptyState>
+  <ng-template #empty>
     <ion-text color="medium">
-      <p>You haven’t added any favorites yet.</p>
+      <p>No favorites yet.</p>
     </ion-text>
   </ng-template>
 </ion-content>
