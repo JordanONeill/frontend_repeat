@@ -1,1 +1,64 @@
-/* Page-specific styles go here */
+/* Constrained hero image */
+.recipe-hero {
+  display: block;
+  margin: 8px auto 12px;
+  max-width: 320px;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 3px solid var(--ion-color-primary);
+  background: #fff;
+}
+
+/* Title styling */
+.title {
+  text-align: center;
+  margin: 6px 0 4px;
+  font-size: 1.6rem;       /* bigger title */
+  font-weight: bold;
+  color: #000;             /* force black */
+}
+
+/* Category / Area line */
+.meta {
+  text-align: center;
+  color: #000;             /* black text */
+  margin-bottom: 12px;
+  font-size: 1rem;
+}
+
+/* Light cards (off-white/khaki) */
+ion-card {
+  --background: #fdfcf7;
+  border: 1px solid var(--ion-color-primary);
+  border-radius: 12px;
+  margin-top: 12px;
+}
+
+ion-card-title {
+  color: var(--ion-color-primary);
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+/* Ingredient list items */
+ion-card ion-list {
+  background: transparent;
+}
+ion-card ion-item {
+  --background: #ffffff;
+  --color: #000000;          /* black text */
+  font-size: 1rem;           /* larger text */
+  border-bottom: 1px solid #eee4d2;
+}
+ion-card ion-item:last-child {
+  border-bottom: none;
+}
+
+/* Instructions */
+.instructions {
+  white-space: pre-wrap;
+  line-height: 1.6;
+  font-size: 1rem;           /* bigger than default */
+  color: #000;               /* black text */
+}

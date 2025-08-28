@@ -1,2 +1,34 @@
-// For information on how to create your own theme, please see:
-// http://ionicframework.com/docs/theming/
+/* Force light mode across the app */
+:root {
+  color-scheme: light;
+}
+
+/* Primary = slightly dark green */
+:root {
+  --ion-color-primary: #1b5e20;
+  --ion-color-primary-rgb: 27, 94, 32;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255,255,255;
+  --ion-color-primary-shade: #184f1b;
+  --ion-color-primary-tint: #326e36;
+
+  /* Secondary = orange accent */
+  --ion-color-secondary: #ff8f00;
+  --ion-color-secondary-rgb: 255,143,0;
+  --ion-color-secondary-contrast: #1b1b1b;
+  --ion-color-secondary-contrast-rgb: 27,27,27;
+  --ion-color-secondary-shade: #e07e00;
+  --ion-color-secondary-tint: #ffa31f;
+
+  /* Background = off white / khaki */
+  --app-bg: #f5f2e8;
+
+  /* Make list/items light by default */
+  --ion-item-background: #ffffff;
+  --ion-background-color: var(--app-bg);
+}
+
+/* Apply off-white to all pages */
+ion-content {
+  --background: var(--app-bg);
+}

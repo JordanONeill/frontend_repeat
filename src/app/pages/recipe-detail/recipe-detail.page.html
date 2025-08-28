@@ -1,11 +1,10 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
     <ion-title>{{ recipe?.strMeal || 'Recipe Detail' }}</ion-title>
 
-    <!-- quick nav if you want -->
     <ion-buttons slot="end">
       <ion-button routerLink="/favorites">Favorites</ion-button>
     </ion-buttons>
@@ -14,24 +13,18 @@
 
 <ion-content class="ion-padding" *ngIf="recipe; else loadingOrError">
 
-  <ion-img [src]="recipe.strMealThumb" alt="{{ recipe.strMeal }}"></ion-img>
+  <!-- Constrained, centered image -->
+  <img class="recipe-hero" [src]="recipe.strMealThumb" alt="{{ recipe.strMeal }}" />
 
-  <h2>{{ recipe.strMeal }}</h2>
-  <p><strong>Category:</strong> {{ recipe.strCategory }}</p>
-  <p><strong>Area:</strong> {{ recipe.strArea }}</p>
+  <h2 class="title">{{ recipe.strMeal }}</h2>
+  <p class="meta">
+    <strong>Category:</strong> {{ recipe.strCategory }} &nbsp;•&nbsp;
+    <strong>Area:</strong> {{ recipe.strArea }}
+  </p>
 
-  <!--Add to Favourites button -->
-  <ion-button expand="block" (click)="addToFavourites()">Add to Favourites</ion-button>
+  <ion-button expand="block" color="secondary" (click)="addToFavourites()">Add to Favourites</ion-button>
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Instructions</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <p>{{ recipe.strInstructions }}</p>
-    </ion-card-content>
-  </ion-card>
-
+  <!-- INGREDIENTS FIRST -->
   <ion-card>
     <ion-card-header>
       <ion-card-title>Ingredients</ion-card-title>
@@ -39,9 +32,19 @@
     <ion-card-content>
       <ion-list>
         <ion-item *ngFor="let item of getIngredients()">
-          {{ item }}
+          <ion-label>{{ item }}</ion-label>
         </ion-item>
       </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Then INSTRUCTIONS -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Instructions</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p class="instructions">{{ recipe.strInstructions }}</p>
     </ion-card-content>
   </ion-card>
 </ion-content>

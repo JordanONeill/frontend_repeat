@@ -1,8 +1,7 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Favorites</ion-title>
 
-    <!-- quick nav -->
     <ion-buttons slot="end">
       <ion-button routerLink="/home">Home</ion-button>
       <ion-button routerLink="/my-dishes">My Dishes</ion-button>
@@ -11,7 +10,6 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <!-- Subscribe to the stream -->
   <ng-container *ngIf="favs.favorites$ | async as favorites; else empty">
     <ion-list *ngIf="favorites.length; else empty">
       <ion-item *ngFor="let r of favorites" (click)="openRecipe(r.idMeal)">
@@ -19,11 +17,7 @@
           <h2>{{ r.strMeal }}</h2>
           <p>{{ r.strCategory }} • {{ r.strArea }}</p>
         </ion-label>
-        <ion-button
-          slot="end"
-          color="danger"
-          fill="outline"
-          (click)="removeFavorite(r.idMeal, $event)">
+        <ion-button slot="end" color="danger" fill="outline" (click)="removeFavorite(r.idMeal, $event)">
           Remove
         </ion-button>
       </ion-item>

@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Recipe Explorer</ion-title>
 
     <!-- quick nav -->
@@ -12,8 +12,11 @@
 
 <ion-content class="ion-padding">
 
-  <!-- Debounced live search -->
-  <ion-item lines="none">
+  <!-- Centered logo with border -->
+  <img class="logo" src="assets/recipe_finder.png" alt="Recipe Finder Logo" />
+
+  <!-- Search bar under logo -->
+  <ion-item lines="none" class="search-row">
     <ion-searchbar
       [value]="searchTerm"
       (ionInput)="onInput($event)"
@@ -21,17 +24,32 @@
     </ion-searchbar>
   </ion-item>
 
+  <!-- Buttons side-by-side -->
+  <ion-grid class="cta-grid">
+    <ion-row>
+      <ion-col size="6">
+        <ion-button expand="block" color="secondary" routerLink="/favorites">
+          Favorites
+        </ion-button>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button expand="block" color="secondary" routerLink="/my-dishes">
+          My Dishes
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
   <!-- Optional loading indicator -->
   <ion-item *ngIf="loading" lines="none">
     <ion-label>Searching…</ion-label>
     <ion-spinner slot="end"></ion-spinner>
   </ion-item>
 
-  <!-- Results list -->
-  <ion-list>
+  <!-- Results list with light background -->
+  <ion-list class="results-list">
     <ion-item *ngFor="let recipe of recipes" [routerLink]="['/recipe', recipe.idMeal]">
       <ion-label>{{ recipe.strMeal }}</ion-label>
     </ion-item>
   </ion-list>
-
 </ion-content>

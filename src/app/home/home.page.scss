@@ -1,27 +1,50 @@
-#container {
-  text-align: center;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+/* Logo */
+.logo {
+  display: block;
+  margin: 12px auto 8px;
+  max-width: 200px;
+  width: 60%;
+  border: 3px solid var(--ion-color-primary);
+  border-radius: 12px;
+  background: #fff;
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+/* Make the wrapper ion-item transparent */
+.search-row {
+  margin-top: 10px;
+  --background: transparent;       /* remove dark wrapper */
+  background: transparent;
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
+/* White search bar with green accents */
+ion-searchbar {
+  --background: #ffffff;           /* search box bg */
+  --color: #000000;                /* text color */
+  --placeholder-color: #666666;    /* placeholder */
+  --icon-color: var(--ion-color-primary);
+  border: 2px solid var(--ion-color-primary);
+  border-radius: 8px;
 }
 
-#container a {
-  text-decoration: none;
+.cta-grid {
+  margin-top: 10px;
+}
+
+/* Light results list container */
+.results-list {
+  margin-top: 10px;
+  background: #fdfcf7;             /* off-white/khaki */
+  border: 1px solid #e7e2cf;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Each row light */
+.results-list ion-item {
+  --background: #ffffff;
+  --color: #1a1a1a;
+  border-bottom: 1px solid #eee4d2;
+}
+.results-list ion-item:last-child {
+  border-bottom: none;
 }
